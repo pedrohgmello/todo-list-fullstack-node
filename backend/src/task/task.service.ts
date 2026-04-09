@@ -37,6 +37,14 @@ export class TaskService {
     })
   }
 
+  async complete(id: string, user_id: string) {
+    const task = await this.taskRepository.findOne({ where: { task_id: id, user: { user_id } } });
+
+    if(!task) throw new NotFoundException();
+
+    return await this.taskRepository.update(id, { completed: true })
+  }
+
   async remove(id: string, user_id: string) {
     const task = await this.taskRepository.findOne({ where: { task_id: id, user: { user_id: user_id } } });
     if(!task) throw new NotFoundException();

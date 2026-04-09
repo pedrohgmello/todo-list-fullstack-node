@@ -36,13 +36,41 @@ export class AuthService {
     const isPasswordValid = await bcrypt.compare(loginDto.password, user.user_password);
     if(!isPasswordValid) throw new UnauthorizedException('Invalid credentials');
     const payload = { username: user.user_email, sub: user.user_id };
+
+    const [access_token, refresh_token] = await Promise.all([
+      this.jwtService.signAsync(payload, { expiresIn: '15m' }),
+      this.jwtService.signAsync({...payload, type: 'refresh'}, { expiresIn: '7d' })
+    ])
     
-    return { 
-      access_token: await this.jwtService.signAsync(JSON.stringify({...payload, type: 'access'}), {
-        expiresIn: '15m'
-      } as JwtSignOptions),
-      refresh_token: await this.jwtService.signAsync(JSON.stringify({...payload, type: 'refresh'}), {
-        expiresIn: '7d',
-    } as JwtSignOptions)}
+    return {
+      access_token,
+      refresh_token
+    }
+  }
+
+  async refresh(refreshToken: string){
+    try{
+      const payload = await this.jwtService.verifyAsync(refreshToken);
+
+      if(payload.type !== 'refresh') throw new UnauthorizedException('Invalid or expired refresh token.');
+
+      const newPayload = {
+        sub: payload.sub,
+        email: payload.email,
+        type: 'access'
+      }
+
+      const [access_token, refresh_token] = await Promise.all([
+        this.jwtService.signAsync(newPayload, { expiresIn: '15m' }),
+        this.jwtService.signAsync({...newPayload, type: 'refresh'}, { expiresIn: '7d' })
+      ])
+
+      return {
+        access_token,
+        refresh_token
+      }
+    } catch(error){
+      throw new UnauthorizedException('Invalid or expired refresh token.');
+    } 
   }
 }

@@ -17,25 +17,31 @@ export class TaskController {
 
   @Get()
   @UseGuards(AuthGuard('jwt'))
-  findAll(@GetUser('sub') user_id: string) {
+  async findAll(@GetUser('sub') user_id: string) {
     return this.taskService.findAll(user_id);
   }
 
   @Get(':id')
   @UseGuards(AuthGuard('jwt'))
-  findOne(@Param('id') id: string, @GetUser('sub') user_id: string) {
+  async findOne(@Param('id') id: string, @GetUser('sub') user_id: string) {
     return this.taskService.findOne(id, user_id);
   }
 
   @Patch(':id')
   @UseGuards(AuthGuard('jwt'))
-  update(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto, @GetUser('sub') user_id: string) {
+  async update(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto, @GetUser('sub') user_id: string) {
     return this.taskService.update(id, updateTaskDto, user_id);
+  }
+
+  @Patch(':id/complete')
+  @UseGuards(AuthGuard('jwt'))
+  async complete(@Param('id') id: string, @GetUser('sub') user_id: string) {
+    return this.taskService.complete(id, user_id);
   }
 
   @Delete(':id')
   @UseGuards(AuthGuard('jwt'))
-  remove(@Param('id') id: string, @GetUser('sub') user_id: string) {
+  async remove(@Param('id') id: string, @GetUser('sub') user_id: string) {
     return this.taskService.remove(id, user_id);
   }
 }

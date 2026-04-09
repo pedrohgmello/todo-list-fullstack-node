@@ -17,7 +17,7 @@ import { UsersModule } from './users/users.module';
       useFactory: (config: ConfigService) => ({
         type: 'postgres',
         host: 'localhost',
-        port: 5432,
+        port: 5433,
         username: config.get<string>('DB_USER'),
         password: config.get<string>('DB_PASSWORD'),
         database: 'todo_db',

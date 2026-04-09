@@ -14,7 +14,7 @@ export class Task {
     description!: string;
 
     @Column({ type: 'boolean', nullable: false})
-    status!: boolean;
+    completed!: boolean;
 
     @ManyToOne(() => User, (user) => user)
     @JoinColumn({ name: 'user_id' })
@@ -23,5 +23,10 @@ export class Task {
     @BeforeInsert()
     generateId(){
         this.task_id = nanoid();
+    }
+
+    @BeforeInsert()
+    insertCompleted(){
+        this.completed = false;
     }
 }
