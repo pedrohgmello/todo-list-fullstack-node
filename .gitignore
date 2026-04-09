@@ -1,0 +1,22 @@
+# Dependências e Builds (em qualquer nível de pasta)
+node_modules
+dist/
+build/
+out/
+.next/
+
+# Environment Files (CRÍTICO: Nunca suba seus segredos!)
+.env
+.env.*
+!.env.example
+
+# OS e IDEs
+.DS_Store
+.vscode/
+.idea/
+
+# Logs e Temporários
+*.log
+npm-debug.log*
+.temp/
+.tmp/
