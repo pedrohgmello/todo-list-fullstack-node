@@ -42,6 +42,7 @@ export class TaskService {
 
     if(!task) throw new NotFoundException();
 
+    if(task.completed) return await this.taskRepository.update(id, { completed: false });
     return await this.taskRepository.update(id, { completed: true })
   }
 
