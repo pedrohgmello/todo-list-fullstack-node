@@ -11,7 +11,7 @@ CREATE TABLE task(
     task_id VARCHAR(21),
     title VARCHAR(255),
     "description" TEXT,
-    status BOOLEAN DEFAULT false,
+    completed BOOLEAN DEFAULT false,
     user_id VARCHAR(21),
 
 

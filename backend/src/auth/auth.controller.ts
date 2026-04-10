@@ -34,6 +34,9 @@ export class AuthController {
       maxAge: 15 * 60 * 1000,
       path: '/',
     });
+    return {
+      access_token
+    }
   }
 
   @Post('refresh')
