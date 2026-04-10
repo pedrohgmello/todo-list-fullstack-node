@@ -27,7 +27,13 @@ export class AuthController {
       maxAge: 7 * 24 * 60 * 60 * 1000,
       path: '/',
     });
-    return { access_token };
+    res.cookie('access_token', access_token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'strict',
+      maxAge: 15 * 60 * 1000,
+      path: '/',
+    });
   }
 
   @Post('refresh')
@@ -40,7 +46,13 @@ export class AuthController {
       maxAge: 7 * 24 * 60 * 60 * 1000,
       path: '/',
     });
-    return { access_token };
+    res.cookie('access_token', access_token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'strict',
+      maxAge: 15 * 60 * 1000,
+      path: '/',
+    });
   }
   
 }
