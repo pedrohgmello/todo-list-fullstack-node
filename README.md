@@ -32,7 +32,7 @@ cd todo-list-fullstack-node
 Configurar as variáveis de ambiente:
 Crie arquivos `.env` nas pastas /frontend e /backend (baseie-se nos arquivos `.env.example`).
 
-Subir os containers:
+#### Subir os containers:
 
 ```Bash
 docker-compose up --build
@@ -43,11 +43,14 @@ Frontend: `http://localhost:3000`
 
 API Backend: `http://localhost:3333`
 
-🇺🇸 English
-🚀 About the Project
+--- 
+
+## 🇺🇸 English
+---
+### 🚀 About the Project
 A modern Fullstack To-Do List application built to showcase scalable development practices, featuring dockerized microservices architecture, Next.js 15 Server Actions, and a robust NestJS backend.
 
-🛠️ Tech Stack
+### 🛠️ Tech Stack
 Frontend: Next.js 15 (App Router), Tailwind CSS, Lucide React.
 
 Backend: NestJS, TypeORM, Node.js 20.
@@ -56,7 +59,7 @@ Database: PostgreSQL.
 
 Infrastructure: Docker, Docker Compose.
 
-📦 How to Run
+### 📦 How to Run
 The project is fully dockerized to ensure it runs in any environment without the need for local dependency installation.
 
 Clone the repository:
@@ -68,7 +71,7 @@ cd todo-list-fullstack-node
 Environment Variables:
 Create `.env` files in both /frontend and /backend folders (refer to `.env.example` files).
 
-Run with Docker:
+#### Run with Docker:
 
 ```Bash
 docker-compose up --build
