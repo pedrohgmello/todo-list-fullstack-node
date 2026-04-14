@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import api from "@/lib/api";
 import { CreateUserRequest } from "@/types/auth";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export default function RegisterPage() {
   async function createUser(formData: FormData) {
@@ -24,6 +25,7 @@ export default function RegisterPage() {
     }
 
     revalidatePath("/register");
+    redirect('/login');
   }
 
   return (
