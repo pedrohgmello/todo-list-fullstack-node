@@ -20,7 +20,7 @@ export default async function api<T>(endpoint: string, options: RequestInit = {}
 
     let response = await fetch(`${BASE_URL}${endpoint}`, config);
 
-    if(response.status === 401){
+    if(response.status === 401 && endpoint !== 'login'){
         const refreshRes = await fetch(`${BASE_URL}/auth/refresh`, {
             method: 'POST',
             credentials: 'include',
