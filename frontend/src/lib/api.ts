@@ -38,7 +38,11 @@ export default async function api<T>(endpoint: string, options: RequestInit = {}
     if(!response.ok){
         const errorBody = await response.json().catch(() => ({}));
         console.log(response.status);
-        throw new Error(`Erro ${response.status}: ${text}`)
+        throw {
+        status: response.status,
+        message: errorBody.message || 'Erro inesperado',
+        data: errorBody
+    };
     }
 
     if (!text) return {}; // Se vier vazio, retorna objeto vazio em vez de estourar erro
