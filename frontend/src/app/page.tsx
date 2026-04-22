@@ -7,9 +7,15 @@ import {
   CardHeader, 
   CardTitle 
 } from "@/components/ui/card";
+import { cookies } from 'next/headers'
 import { CheckCircle2, LayoutIcon, ShieldCheck } from "lucide-react";
 
-export default function HomePage() {
+export default async function HomePage() {
+
+
+  const cookieStore = await cookies();
+  const isLoggedIn = cookieStore.has('access_token');
+  
   return (
     <div className="flex flex-col items-center">
       {/* HERO SECTION */}
@@ -28,10 +34,18 @@ export default function HomePage() {
           </p>
           <div className="flex flex-col gap-2 min-[400px]:flex-row pt-4">
             <Button asChild size="lg" className="px-8">
-              <Link href="/tasks">Começar Agora</Link>
+              {isLoggedIn ? (
+                <Link href="/tasks">Minhas Tarefas</Link>
+              )
+                : (
+                <Link href="/register">Começar Agora</Link>
+              )}
+              
             </Button>
             <Button asChild variant="outline" size="lg" className="px-8">
+              {!isLoggedIn && (
               <Link href="/login">Fazer Login</Link>
+              )}
             </Button>
           </div>
         </div>
