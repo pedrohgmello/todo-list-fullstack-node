@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import LoginForm from "@/components/LoginForm";
 import { Card, CardContent, CardDescription,  CardHeader, CardTitle } from "@/components/ui/card";
 
 
@@ -15,7 +15,7 @@ export default function LoginPage(){
           </CardDescription>
         </CardHeader>
         <CardContent>
-          
+          <LoginForm />
         </CardContent>
       </Card>    
     </>
