@@ -7,6 +7,8 @@ import { Button } from '@/components/ui/button';
 import { useActionState } from 'react';
 import { loginUser } from '@/actions/auth-actions';
 import { Alert, AlertTitle } from '@/components/ui/alert'
+import { BadgeAlert } from "lucide-react";
+import Link from "next/link";
 
 export default function LoginForm(){
 
@@ -17,7 +19,8 @@ export default function LoginForm(){
             <div className="flex flex-col gap-6">
 
               {state?.error && (
-                <Alert>
+                <Alert className="bg-black text-zinc-200">
+                  <BadgeAlert />
                   <AlertTitle>
                     {state.error}
                   </AlertTitle>
@@ -49,6 +52,9 @@ export default function LoginForm(){
               <Button type="submit" className="w-full">
                 Login
               </Button>
+              <Link href="/register" className="underline font-medium">
+                Não tem conta? Registre-se
+              </Link>
             </CardFooter>
           </form>
         </>  

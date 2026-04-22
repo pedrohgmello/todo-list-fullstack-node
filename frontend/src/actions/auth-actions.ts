@@ -4,7 +4,7 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from "next/cache";
 import api from "@/lib/api";
-import { LoginRequest } from "@/types/auth";
+import { LoginRequest, CreateUserRequest } from "@/types/auth";
 
 
 export async function logoutAction(){
@@ -55,3 +55,39 @@ export async function loginUser(actionState: ActionState, formData: FormData): P
         revalidatePath("/login");
         redirect('/tasks');
 }
+
+export async function createUser(actionState: ActionState, formData: FormData): Promise<ActionState> {
+    'use server'
+    const request: CreateUserRequest = {
+      user_email: formData.get('userEmail') as string,
+      user_password: formData.get('userPassword') as string,
+    };
+
+    try {
+      const response = await api("/auth/register", {
+        method: "POST",
+        body: JSON.stringify(request),
+      });
+
+      const cookieStore = await cookies();
+          cookieStore.set("access_token", response.access_token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "lax",
+            path: "/",
+            maxAge: 15 * 60,
+      });
+      
+    } catch (error) {
+        if (error && typeof error === 'object' && 'status' in error) {
+          const status = (error as { status: number }).status;
+          if(status === 409){
+            return { error: 'Usuário já existe.' };
+          }
+        }  
+        return { error: 'Erro desconhecido no servidor' };
+    }
+
+    revalidatePath("/register");
+    redirect('/tasks');
+  }
