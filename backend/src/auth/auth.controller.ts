@@ -10,10 +10,33 @@ export class AuthController {
 
   @Post('register')
   @HttpCode(201)
-  async create(@Body() createUserDto: CreateUserDto) {
+  async create(@Body() createUserDto: CreateUserDto, @Res({ passthrough: true }) res) {
     const user = await this.authService.create(createUserDto);
     const {user_password, ...result} = user;
-    return result;
+    if(result){
+      const loginDto: LoginDto = {
+        email: createUserDto.user_email,
+        password: createUserDto.user_password
+      } 
+      const {access_token, refresh_token} = await this.authService.login(loginDto);
+      res.cookie('refresh_token', refresh_token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'strict',
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        path: '/',
+      });
+      res.cookie('access_token', access_token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'strict',
+        maxAge: 15 * 60 * 1000,
+        path: '/',
+      });
+      return {
+        access_token
+      }
+    }
   }
 
   @Post('login')
