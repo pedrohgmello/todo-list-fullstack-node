@@ -42,11 +42,11 @@ export default async function HomePage() {
               )}
               
             </Button>
-            <Button asChild variant="outline" size="lg" className="px-8">
-              {!isLoggedIn && (
-              <Link href="/login">Fazer Login</Link>
-              )}
-            </Button>
+            {!isLoggedIn && (
+              <Button asChild variant="outline" size="lg" className="px-8">
+                <Link href="/login">Fazer Login</Link>
+              </Button>
+            )}
           </div>
         </div>
       </section>
