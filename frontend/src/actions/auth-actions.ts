@@ -35,11 +35,11 @@ export async function loginUser(actionState: ActionState, formData: FormData): P
 
           const cookieStore = await cookies();
           cookieStore.set("access_token", response.access_token, {
-            httpOnly: true, // Impede que scripts maliciosos (JS) leiam o token
-            secure: process.env.NODE_ENV === "production", // Só envia via HTTPS em produção
-            sameSite: "lax", // Proteção básica contra CSRF
-            path: "/", // O cookie vale para o site inteiro (/tasks, /profile, etc)
-            maxAge: 15 * 60, // Tempo de vida (ex: 1 dia em segundos)
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "lax",
+            path: "/",
+            maxAge: 15 * 60,
           });
 
         } catch (error: unknown) {
