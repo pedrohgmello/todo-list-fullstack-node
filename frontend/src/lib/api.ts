@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers';
 
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3333'
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://backend:3333'
 
 export default async function api<T>(endpoint: string, options: RequestInit = {}) {
 
